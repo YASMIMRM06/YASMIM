@@ -8,25 +8,25 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('comprovantes', function (Blueprint $table) {
+        Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('aluno_id')->constrained('alunos')->onDelete('cascade');
-            $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
-            $table->string('codigo', 20)->unique();
+            $table->enum('tipo', ['rg', 'cpf', 'historico', 'certificado', 'outro']);
+            $table->string('descricao', 100);
             $table->string('arquivo_path');
-            $table->string('tipo_arquivo', 50)->comment('PDF, JPEG, PNG, etc');
-            $table->date('data_emissao');
+            $table->string('tipo_arquivo', 50);
+            $table->date('data_envio');
             $table->enum('status', ['pendente', 'aprovado', 'rejeitado'])->default('pendente');
             $table->text('observacoes')->nullable();
             $table->softDeletes();
             $table->timestamps();
             
-            $table->index(['aluno_id', 'curso_id']);
+            $table->index(['aluno_id', 'tipo']);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('comprovantes');
+        Schema::dropIfExists('documentos');
     }
 };

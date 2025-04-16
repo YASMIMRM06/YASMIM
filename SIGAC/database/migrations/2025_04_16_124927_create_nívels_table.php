@@ -6,22 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('nívels', function (Blueprint $table) {
+        Schema::create('niveis', function (Blueprint $table) {
             $table->id();
+            $table->string('nome', 50)->unique();
+            $table->string('sigla', 10)->unique();
+            $table->text('descricao')->nullable();
+            $table->integer('ordem')->default(0)->comment('Ordem de exibição');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('nívels');
+        Schema::dropIfExists('niveis');
     }
 };

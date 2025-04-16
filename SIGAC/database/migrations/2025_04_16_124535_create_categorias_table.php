@@ -6,21 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->string('nome', 100)->unique();
+            $table->text('descricao')->nullable();
+            $table->string('icone', 50)->nullable()->comment('Classe do ícone (ex: Font Awesome)');
+            $table->string('cor', 7)->default('#6c757d')->comment('Código hexadecimal da cor');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('categorias');
     }

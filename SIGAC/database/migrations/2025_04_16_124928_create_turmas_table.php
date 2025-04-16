@@ -6,21 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('turmas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
+            $table->string('codigo', 20)->unique();
+            $table->string('nome', 100);
+            $table->date('data_inicio');
+            $table->date('data_fim');
+            $table->time('horario')->nullable();
+            $table->integer('vagas_totais');
+            $table->integer('vagas_disponiveis');
+            $table->enum('status', ['planejada', 'ativa', 'concluida', 'cancelada'])->default('planejada');
+            $table->text('local')->nullable();
+            $table->text('observacoes')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            
+            $table->index(['curso_id', 'data_inicio']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('turmas');
     }
