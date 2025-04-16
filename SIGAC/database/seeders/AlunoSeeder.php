@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class AlunoSeeder extends Seeder
 {
-    public function run()
+    public function run()void
     {
         $alunos = [
             [
