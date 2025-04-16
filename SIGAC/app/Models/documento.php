@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class documento-m extends Model
+class documento extends Model
 {
     //
 }
